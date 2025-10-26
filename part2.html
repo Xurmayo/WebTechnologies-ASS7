@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Part 2 – jQuery Effects</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- ===== Navbar ===== -->
+  <nav class="navbar navbar-expand-lg sticky-top navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">jQuery Assignment</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Part 1</a></li>
+          <li class="nav-item"><a class="nav-link active" href="part2.html">Part 2</a></li>
+          <li class="nav-item"><a class="nav-link" href="part3.html">Part 3</a></li>
+          <li class="nav-item"><a class="nav-link" href="part4.html">Part 4</a></li>
+          <li class="nav-item"><a class="nav-link" href="part5.html">Part 5</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Main ===== -->
+  <main>
+    <header class="text-center mb-4">
+      <h1 class="fw-bold">Part 2 – jQuery Effects</h1>
+      <p class="text-muted">
+        Practice interactive methods like <code>.hide()</code>, <code>.show()</code>, 
+        <code>.fadeIn()</code>, and <code>.slideToggle()</code> to animate content.
+      </p>
+    </header>
+
+    <section class="form-card text-center">
+      <!-- === Task 2 === -->
+      <h4>Task 2 – Visibility Methods</h4>
+      <ul>
+        <li>Create a paragraph and two buttons: Hide and Show.</li>
+        <li>Use <code>.hide()</code>, <code>.show()</code>, and <code>.toggle()</code>.</li>
+      </ul>
+
+      <p id="visibilityText" class="mt-3 fs-5">👋 Hello there! I’m a paragraph you can hide or show.</p>
+      <div class="d-flex justify-content-center gap-2 mt-2">
+        <button id="btnHide" class="btn btn-brand">Hide</button>
+        <button id="btnShow" class="btn btn-brand">Show</button>
+        <button id="btnToggle" class="btn btn-brand">Toggle</button>
+      </div>
+
+      <hr class="my-4">
+
+      <!-- === Task 3 === -->
+      <h4>Task 3 – Fade Methods</h4>
+      <ul>
+        <li>Add an image and use <code>.fadeIn()</code>, <code>.fadeOut()</code>, and <code>.fadeToggle()</code>.</li>
+      </ul>
+
+      <div class="mt-3">
+        <img id="fadeImg" src="https://media-cdn.tripadvisor.com/media/photo-m/1280/1a/58/88/68/beef-wellington.jpg"
+             alt="Sample Dish" width="280" class="rounded shadow">
+      </div>
+      <div class="d-flex justify-content-center gap-2 mt-2">
+        <button id="btnFadeOut" class="btn btn-brand">Fade Out</button>
+        <button id="btnFadeIn" class="btn btn-brand">Fade In</button>
+        <button id="btnFadeToggle" class="btn btn-brand">Fade Toggle</button>
+      </div>
+
+      <hr class="my-4">
+
+      <!-- === Task 4 === -->
+      <h4>Task 4 – Slide Methods</h4>
+      <ul>
+        <li>Create a collapsible panel controlled with <code>.slideUp()</code>, <code>.slideDown()</code>, and <code>.slideToggle()</code>.</li>
+      </ul>
+
+      <div class="border rounded p-3 bg-light" id="slidePanel">
+        <p class="mb-0">📦 This is a collapsible panel. Click the buttons to slide it!</p>
+      </div>
+      <div class="d-flex justify-content-center gap-2 mt-3">
+        <button id="btnSlideUp" class="btn btn-brand">Slide Up</button>
+        <button id="btnSlideDown" class="btn btn-brand">Slide Down</button>
+        <button id="btnSlideToggle" class="btn btn-brand">Slide Toggle</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>© 2025 Amangeldi Alisher | SE-2432 | jQuery Assignment</p>
+  </footer>
+
+  <!-- ===== Scripts ===== -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      console.log("Part 2 ready!");
+
+      // --- Task 2 ---
+      $("#btnHide").click(() => $("#visibilityText").hide());
+      $("#btnShow").click(() => $("#visibilityText").show());
+      $("#btnToggle").click(() => $("#visibilityText").toggle());
+
+      // --- Task 3 ---
+      $("#btnFadeOut").click(() => $("#fadeImg").fadeOut(800));
+      $("#btnFadeIn").click(() => $("#fadeImg").fadeIn(800));
+      $("#btnFadeToggle").click(() => $("#fadeImg").fadeToggle(800));
+
+      // --- Task 4 ---
+      $("#btnSlideUp").click(() => $("#slidePanel").slideUp(600));
+      $("#btnSlideDown").click(() => $("#slidePanel").slideDown(600));
+      $("#btnSlideToggle").click(() => $("#slidePanel").slideToggle(600));
+    });
+  </script>
+</body>
+</html>

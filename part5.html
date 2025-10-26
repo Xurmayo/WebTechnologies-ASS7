@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Part 5 – Mini Project (Image Gallery)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap + shared theme -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* --- Gallery-specific styles (kept tiny) --- */
+    .gallery-card { max-width: 980px; }
+    .preview {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #fff;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    }
+    .preview img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .thumbs img {
+      width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: .75rem;
+      cursor: pointer; transition: transform .2s, box-shadow .2s, outline-color .2s;
+      outline: 3px solid transparent;
+    }
+    .thumbs img:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,.15); }
+    .thumbs img.active { outline-color: var(--accent); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; background: rgba(0,0,0,.75);
+      display: none; align-items: center; justify-content: center; z-index: 1050;
+      padding: 2rem;
+    }
+    .lightbox img {
+      max-width: 92vw; max-height: 86vh; border-radius: .75rem; box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .lightbox-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: rgba(0,0,0,.6); color: #fff; border: 0; border-radius: 999px;
+      width: 42px; height: 42px; display: grid; place-items: center; font-size: 1.2rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg sticky-top navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">jQuery Assignment</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Part 1</a></li>
+          <li class="nav-item"><a class="nav-link" href="part2.html">Part 2</a></li>
+          <li class="nav-item"><a class="nav-link" href="part3.html">Part 3</a></li>
+          <li class="nav-item"><a class="nav-link" href="part4.html">Part 4</a></li>
+          <li class="nav-item"><a class="nav-link active" href="part5.html">Part 5</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main>
+    <header class="text-center mb-4">
+      <h1 class="fw-bold">Part 5 – Mini Project</h1>
+      <p class="text-muted">
+        <strong>Image Gallery:</strong> Thumbnails fade in/out and the preview enlarges on click (lightbox).
+      </p>
+    </header>
+
+    <section class="form-card gallery-card mx-auto">
+      <!-- Preview -->
+      <div class="preview mb-3">
+        <img id="previewImg"
+             src="https://media-cdn.tripadvisor.com/media/photo-m/1280/1a/58/88/68/beef-wellington.jpg"
+             alt="Preview dish">
+      </div>
+
+      <!-- Controls -->
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <div class="d-flex gap-2">
+          <button id="prevBtn" class="btn btn-brand btn-sm px-3">‹ Prev</button>
+          <button id="nextBtn" class="btn btn-brand btn-sm px-3">Next ›</button>
+        </div>
+        <div class="small text-muted">Tip: click the large image to open lightbox</div>
+      </div>
+
+      <!-- Thumbnails -->
+      <div class="row thumbs g-3">
+        <div class="col-6 col-sm-3">
+          <img class="thumb active"
+               data-full="https://media-cdn.tripadvisor.com/media/photo-m/1280/1a/58/88/68/beef-wellington.jpg"
+               src="https://media-cdn.tripadvisor.com/media/photo-m/1280/1a/58/88/68/beef-wellington.jpg"
+               alt="Beef Wellington">
+        </div>
+        <div class="col-6 col-sm-3">
+          <img class="thumb"
+               data-full="https://s.lightorangebean.com/media/20240914160809/Spicy-Penne-Pasta_-done.png"
+               src="https://s.lightorangebean.com/media/20240914160809/Spicy-Penne-Pasta_-done.png"
+               alt="Spicy Penne Pasta">
+        </div>
+        <div class="col-6 col-sm-3">
+          <img class="thumb"
+               data-full="https://i.ytimg.com/vi/sE9YjlhsilA/maxresdefault.jpg"
+               src="https://i.ytimg.com/vi/sE9YjlhsilA/maxresdefault.jpg"
+               alt="Tiramisu Dessert">
+        </div>
+        <div class="col-6 col-sm-3">
+          <img class="thumb"
+               data-full="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Yu5R5Cca3cnatiDwiCdK3uW10tKL1q8Q857g9urM2Ae193D4ACvUIjjTubeA0ufJhO4zN73SS1KIFnFnXhVGvpXh1AF96U_Yd3E-10lNzA"
+               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2Yu5R5Cca3cnatiDwiCdK3uW10tKL1q8Q857g9urM2Ae193D4ACvUIjjTubeA0ufJhO4zN73SS1KIFnFnXhVGvpXh1AF96U_Yd3E-10lNzA"
+               alt="Caprese Salad">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Amangeldi Alisher | SE-2432 | jQuery Assignment</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <img id="lightboxImg" src="" alt="Enlarged preview">
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(function () {
+      console.log("Part 5 ready!");
+
+      const $thumbs = $(".thumb");
+      const $preview = $("#previewImg");
+      let index = 0;
+
+      // Build an array of image URLs for prev/next
+      const urls = $thumbs.map((i, el) => $(el).data("full")).get();
+
+      function showAt(i) {
+        index = (i + urls.length) % urls.length; // wrap around
+        const nextSrc = urls[index];
+
+        // update active outline
+        $thumbs.removeClass("active").eq(index).addClass("active");
+
+        // fade transition
+        $preview.stop(true, true).fadeOut(200, function () {
+          $preview.attr("src", nextSrc).fadeIn(250);
+        });
+      }
+
+      // Click thumbnail
+      $thumbs.on("click", function () {
+        const i = $thumbs.index(this);
+        showAt(i);
+      });
+
+      // Prev/Next
+      $("#prevBtn").on("click", () => showAt(index - 1));
+      $("#nextBtn").on("click", () => showAt(index + 1));
+
+      // Lightbox open
+      $preview.on("click", function () {
+        $("#lightboxImg").attr("src", urls[index]);
+        $("#lightbox").fadeIn(200);
+      });
+
+      // Lightbox close (click X or backdrop)
+      $(".lightbox-close, #lightbox").on("click", function (e) {
+        if (e.target.id === "lightbox" || $(e.target).hasClass("lightbox-close")) {
+          $("#lightbox").fadeOut(200);
+        }
+      });
+
+      // Keyboard support in lightbox
+      $(document).on("keydown", function (e) {
+        const visible = $("#lightbox").is(":visible");
+        if (!visible) return;
+        if (e.key === "Escape") $("#lightbox").fadeOut(150);
+        if (e.key === "ArrowRight") showAt(index + 1);
+        if (e.key === "ArrowLeft") showAt(index - 1);
+      });
+    });
+  </script>
+</body>
+</html>
